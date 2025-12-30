@@ -66,9 +66,32 @@ function isOnCooldown(key, ms) {
   const last = cooldowns.get(key) || 0;
   const now = Date.now();
   if (now - last < ms) return true;
-  cooldowns.set(key, now);
   return false;
 }
+
+// Set cooldown after command executes
+// ...existing code...
+client.on("message", async (channel, userstate, message, self) => {
+  if (self) return; // Ignore own messages
+  if (!message.startsWith(PREFIX)) return;
+
+  const args = message.slice(PREFIX.length).trim().split(/\s+/);
+  const cmdName = (args.shift() || "").toLowerCase();
+  const cmd = commands.get(cmdName);
+  if (!cmd) return;
+
+  // Per-channel cooldown key
+  const cooldownMs = typeof cmd.cooldown === "number" ? cmd.cooldown : 3000;
+  const key = `${channel}|${cmdName}`;
+  if (isOnCooldown(key, cooldownMs)) return;
+
+  try {
+    await cmd.execute({ client, channel, userstate, args, PREFIX, OWNER });
+    cooldowns.set(key, Date.now());
+  } catch (err) {
+    console.error(`[${cmdName}] Error:`, err);
+  }
+});
 
 const client = new tmi.Client({
   options: { debug: true },

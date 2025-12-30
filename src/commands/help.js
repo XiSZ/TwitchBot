@@ -26,15 +26,13 @@ function loadCommands(isOwnerUser) {
 
 module.exports = {
   name: "help",
-  description: "Lists available commands",
+  description: "Lists available commands.",
   usage: "!help",
   cooldown: 3000,
   async execute({ client, channel, PREFIX, userstate, OWNER }) {
     const isOwnerUser = isOwner(userstate, OWNER);
     const cmds = loadCommands(isOwnerUser);
-    const list = cmds
-      .map((c) => `${PREFIX}${c.name}: ${c.description}`)
-      .join(" | ");
-    client.say(channel, `Available commands: ${list}`);
+    const names = cmds.map((c) => PREFIX + c.name).join(", ");
+    client.say(channel, `Commands: ${names}`);
   },
 };
