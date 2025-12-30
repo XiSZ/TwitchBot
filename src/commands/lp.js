@@ -2,7 +2,11 @@ const { getSummonerByRiotId, getRankedStats } = require("../utils/riot-api");
 const fs = require("fs");
 const path = require("path");
 
-const SNAPSHOT_FILE = path.join(__dirname, "..", "..", "lp_snapshots.json");
+// Use /Data/lp_snapshots.json if available (Railway volume), else fallback to project root
+const DATA_DIR = process.env.DATA_DIR || "/Data";
+const SNAPSHOT_FILE = fs.existsSync(DATA_DIR)
+  ? path.join(DATA_DIR, "lp_snapshots.json")
+  : path.join(__dirname, "..", "..", "lp_snapshots.json");
 
 function loadSnapshots() {
   try {

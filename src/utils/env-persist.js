@@ -1,7 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
-const ENV_FILE = path.join(__dirname, "..", "..", ".env");
+// Use /Data/.env if available (Railway volume), else fallback to project root
+const DATA_DIR = process.env.DATA_DIR || "/Data";
+const ENV_FILE = fs.existsSync(path.join(DATA_DIR, ".env"))
+  ? path.join(DATA_DIR, ".env")
+  : path.join(__dirname, "..", "..", ".env");
 
 /**
  * Update TWITCH_CHANNELS in .env file with the current channel list.
