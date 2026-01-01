@@ -232,10 +232,6 @@ All League of Legends commands support both specifying a Riot ID or using the de
   - Region inputs accepted (aliases): NA/NA1, EUW/EUW1, EUNE/EUN1, KR, BR/BR1, LA/LAN/LA1, LAS/LA2, OC/OCE/OC1, RU, TR/TR1, JP/JP1, SG/SG2/SEA
   - Output: `[EUW1] ✅ All servers operational` or `[NA1] ⚠ INCIDENT: Server issue`
 
-- `!draft [role]` → Suggest bans for a given role (and optionally elo)
-  - Example: `!draft top`
-  - Output: `Suggested bans for top: Darius, Fiora, Jax`
-
 **Setting up League of Legends features:**
 
 Add these to your `.env` file:
