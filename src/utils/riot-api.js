@@ -21,6 +21,29 @@ function inferRegionalHost(platform) {
   return "americas"; // safe default
 }
 
+function getOpggRegion(platformRegion) {
+  const mapping = {
+    na1: "na",
+    br1: "br",
+    la1: "lan",
+    la2: "las",
+    oc1: "oce",
+    euw1: "euw",
+    eun1: "eun",
+    tr1: "tr",
+    ru: "ru",
+    kr: "kr",
+    jp1: "jp",
+    sg2: "sg",
+    th2: "sg",
+    ph2: "sg",
+    vn2: "sg",
+    tw2: "sg",
+    me1: "eu",
+  };
+  return mapping[platformRegion] || "na";
+}
+
 const platformClient = axios.create({
   baseURL: `https://${PLATFORM_REGION}.api.riotgames.com`,
   headers: { "X-Riot-Token": API_KEY },
@@ -331,4 +354,5 @@ module.exports = {
   getPlatformStatus,
   getChampionWinrates,
   getWinStreak,
+  getOpggRegion,
 };
